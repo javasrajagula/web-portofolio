@@ -62,16 +62,26 @@
           </svg>
         </button>
 
-        <button id="palette-shuffle" class="theme-toggle-btn" aria-label="Shuffle Colors">
-          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"></circle>
-            <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
-            <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
-            <circle cx="8.5" cy="15.5" r="1.5" fill="currentColor"></circle>
-            <circle cx="15.5" cy="8.5" r="1.5" fill="currentColor"></circle>
-          </svg>
-        </button>
+        <!-- Unified Color Palette Switcher Widget -->
+        <div class="palette-switcher-wrapper">
+          <select id="palette-select" class="palette-select" aria-label="Select Color Palette">
+            <option value="0">Default Retro</option>
+            <option value="1">Cyberpunk Neon</option>
+            <option value="2">80s Vaporwave</option>
+            <option value="3">Acid Rave</option>
+            <option value="4">Citrus Punch</option>
+          </select>
+          <button id="palette-shuffle" class="palette-shuffle-btn" aria-label="Shuffle Colors">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"></circle>
+              <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+              <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+              <circle cx="8.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+              <circle cx="15.5" cy="8.5" r="1.5" fill="currentColor"></circle>
+            </svg>
+          </button>
+        </div>
 
         <!-- Custom Color Picker Widget -->
         <div class="color-picker-wrapper">

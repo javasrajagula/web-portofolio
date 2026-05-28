@@ -275,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * 0.6. RANDOM COLOR PALETTE GENERATOR
    * ========================================== */
   const paletteShuffleBtn = document.getElementById('palette-shuffle');
+  const paletteSelect = document.getElementById('palette-select');
 
   const palettes = [
     {
@@ -344,11 +345,36 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.entries(activePalette.colors).forEach(([property, value]) => {
       document.documentElement.style.setProperty(property, value);
     });
+
+    if (paletteSelect) {
+      paletteSelect.value = index;
+    }
   };
 
   // Initialize saved palette
   if (currentPaletteIndex !== 0) {
     applyPalette(currentPaletteIndex);
+  } else {
+    if (paletteSelect) {
+      paletteSelect.value = 0;
+    }
+  }
+
+  // Palette select change listener
+  if (paletteSelect) {
+    paletteSelect.addEventListener('change', (e) => {
+      const index = parseInt(e.target.value, 10);
+      applyPalette(index);
+      playClickSound();
+      showToast(`${translations[currentLang].toastPalette}${palettes[index].name}`);
+      
+      // Reset custom accent color when selecting standard palettes
+      localStorage.removeItem('portfolio-custom-accent');
+      const customPicker = document.getElementById('accent-color-picker');
+      if (customPicker) {
+        customPicker.value = palettes[index].colors['--color-yellow'];
+      }
+    });
   }
 
   // Palette Shuffle click listener
@@ -1115,6 +1141,16 @@ Or visit: <a href="https://wa.me/6285338123425" target="_blank" style="color: va
     if (terminalWelcomeLines.length >= 2) {
       terminalWelcomeLines[0].textContent = terminalTranslations[currentLang].welcome;
       terminalWelcomeLines[1].innerHTML = terminalTranslations[currentLang].helpTip;
+    }
+
+    // 6. Color palette options update
+    const pSelect = document.getElementById('palette-select');
+    if (pSelect && pSelect.options.length >= 5) {
+      pSelect.options[0].text = currentLang === 'id' ? 'Default Retro' : 'Default Retro';
+      pSelect.options[1].text = currentLang === 'id' ? 'Cyberpunk Neon' : 'Cyberpunk Neon';
+      pSelect.options[2].text = currentLang === 'id' ? 'Vaporwave 80-an' : '80s Vaporwave';
+      pSelect.options[3].text = currentLang === 'id' ? 'Acid Rave' : 'Acid Rave';
+      pSelect.options[4].text = currentLang === 'id' ? 'Citrus Punch' : 'Citrus Punch';
     }
   };
 

@@ -424,6 +424,72 @@ input, textarea, button {
   box-shadow: 2px 2px 0px var(--border-color);
 }
 
+/* Unified Color Palette Switcher Widget */
+.palette-switcher-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-yellow);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-flat-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  height: 44px;
+}
+
+[data-theme="dark"] .palette-switcher-wrapper {
+  background-color: var(--color-purple);
+}
+
+.palette-switcher-wrapper:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0px var(--border-color);
+}
+
+.palette-select {
+  border: none !important;
+  background: transparent !important;
+  font-family: var(--font-alt);
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #121212;
+  cursor: pointer;
+  padding: 0 8px 0 12px;
+  height: 100%;
+  outline: none;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; /* Hide default browser arrow */
+  padding-right: 24px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23121212' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='3 4 6 7 9 4'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: calc(100% - 8px) center !important;
+}
+
+.palette-select option {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.palette-shuffle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  border-left: var(--border-thick) !important;
+  background: transparent !important;
+  color: #121212;
+  width: 40px;
+  height: 100%;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.palette-shuffle-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
 .nav-toggle {
   display: none;
   cursor: pointer;
@@ -1933,6 +1999,17 @@ body.konami-mode .toast {
 @media (max-width: 480px) {
   .header-actions {
     gap: 6px;
+  }
+  .palette-switcher-wrapper {
+    height: 38px;
+  }
+  .palette-select {
+    font-size: 0.75rem;
+    padding-right: 18px;
+    background-position: calc(100% - 4px) center !important;
+  }
+  .palette-shuffle-btn {
+    width: 32px;
   }
   .theme-toggle-btn {
     width: 38px;
