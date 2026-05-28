@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Bind click sounds to all interactive elements except toggle buttons
   const setupClickSounds = () => {
-    const clickables = document.querySelectorAll('a, button:not(#theme-toggle):not(#sound-toggle), input[type="submit"], input[type="button"], select');
+    const clickables = document.querySelectorAll('a, button:not(#theme-toggle):not(#sound-toggle):not(#palette-shuffle), input[type="submit"], input[type="button"], select');
     clickables.forEach(elem => {
       elem.removeEventListener('click', playClickSound);
       elem.addEventListener('click', playClickSound);
@@ -111,6 +111,96 @@ document.addEventListener('DOMContentLoaded', () => {
     setupClickSounds();
   });
   soundObserver.observe(document.body, { childList: true, subtree: true });
+
+  /* ==========================================
+   * 0.6. RANDOM COLOR PALETTE GENERATOR
+   * ========================================== */
+  const paletteShuffleBtn = document.getElementById('palette-shuffle');
+
+  const palettes = [
+    {
+      name: 'Retro Default',
+      colors: {
+        '--color-yellow': '#FFD93D',
+        '--color-green': '#6BCB77',
+        '--color-blue': '#4D96FF',
+        '--color-pink': '#FF6B6B',
+        '--color-purple': '#B1AFFF',
+        '--color-orange': '#FF9F29'
+      }
+    },
+    {
+      name: 'Cyberpunk Neon',
+      colors: {
+        '--color-yellow': '#FFE600',
+        '--color-green': '#00FF66',
+        '--color-blue': '#00E8FF',
+        '--color-pink': '#FF007F',
+        '--color-purple': '#9900FF',
+        '--color-orange': '#FF5F00'
+      }
+    },
+    {
+      name: '80s Vaporwave',
+      colors: {
+        '--color-yellow': '#FFF47D',
+        '--color-green': '#3BE8B0',
+        '--color-blue': '#1AA2C4',
+        '--color-pink': '#FF6B6B',
+        '--color-purple': '#A179F2',
+        '--color-orange': '#FFA45C'
+      }
+    },
+    {
+      name: 'Acid Rave',
+      colors: {
+        '--color-yellow': '#E1FA3C',
+        '--color-green': '#1DF072',
+        '--color-blue': '#1C85E8',
+        '--color-pink': '#FA3C7B',
+        '--color-purple': '#A33CFA',
+        '--color-orange': '#FA9E3C'
+      }
+    },
+    {
+      name: 'Citrus Punch',
+      colors: {
+        '--color-yellow': '#F4D03F',
+        '--color-green': '#27AE60',
+        '--color-blue': '#2980B9',
+        '--color-pink': '#E74C3C',
+        '--color-purple': '#8E44AD',
+        '--color-orange': '#E67E22'
+      }
+    }
+  ];
+
+  let currentPaletteIndex = parseInt(localStorage.getItem('portfolio-palette-index') || '0', 10);
+
+  const applyPalette = (index) => {
+    currentPaletteIndex = index;
+    localStorage.setItem('portfolio-palette-index', index);
+    const activePalette = palettes[index];
+    
+    Object.entries(activePalette.colors).forEach(([property, value]) => {
+      document.documentElement.style.setProperty(property, value);
+    });
+  };
+
+  // Initialize saved palette
+  if (currentPaletteIndex !== 0) {
+    applyPalette(currentPaletteIndex);
+  }
+
+  // Palette Shuffle click listener
+  if (paletteShuffleBtn) {
+    paletteShuffleBtn.addEventListener('click', () => {
+      const nextIndex = (currentPaletteIndex + 1) % palettes.length;
+      applyPalette(nextIndex);
+      playClickSound();
+      showToast(`Skema Warna: ${palettes[nextIndex].name}`);
+    });
+  }
 
   /* ==========================================
    * 0.7. THEME TOGGLE (LIGHT/DARK NEOBRUTALISM)
