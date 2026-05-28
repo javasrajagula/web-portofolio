@@ -1383,6 +1383,52 @@ input, textarea, button {
 }
 
 /* -------------------------------------------------------------
+ * CUSTOM CURSOR (NEOBRUTALISM STYLE)
+ * ------------------------------------------------------------- */
+.custom-cursor {
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-yellow);
+  border: var(--border-thick);
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width var(--transition-fast), height var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-normal);
+  opacity: 0;
+}
+
+/* Custom cursor hover state */
+.custom-cursor.hover {
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-pink);
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: var(--shadow-flat-sm);
+}
+
+.custom-cursor.visible {
+  opacity: 1;
+}
+
+/* Hide default cursor on desktop screens */
+@media (hover: hover) and (pointer: fine) {
+  body, 
+  a, 
+  button, 
+  input, 
+  textarea, 
+  select, 
+  .theme-toggle-btn,
+  .scroll-top-btn,
+  .social-link {
+    cursor: none !important;
+  }
+}
+
+/* -------------------------------------------------------------
  * MEDIA QUERIES (RESPONSIVENESS)
  * ------------------------------------------------------------- */
 @media (max-width: 1024px) {

@@ -304,4 +304,51 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  /* ==========================================
+   * 6. CUSTOM CURSOR (NEOBRUTALISM STYLE)
+   * ========================================== */
+  const customCursor = document.querySelector('.custom-cursor');
+
+  if (customCursor) {
+    const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (hasHover) {
+      document.addEventListener('mousemove', (e) => {
+        if (!customCursor.classList.contains('visible')) {
+          customCursor.classList.add('visible');
+        }
+        customCursor.style.left = `${e.clientX}px`;
+        customCursor.style.top = `${e.clientY}px`;
+      });
+
+      document.addEventListener('mouseleave', () => {
+        customCursor.classList.remove('visible');
+      });
+
+      const interactiveSelector = 'a, button, input, textarea, select, .social-link, .project-card, .timeline-item, .info-card';
+      
+      const addHover = () => customCursor.classList.add('hover');
+      const removeHover = () => customCursor.classList.remove('hover');
+
+      const updateHoverState = () => {
+        const hoverables = document.querySelectorAll(interactiveSelector);
+        hoverables.forEach(item => {
+          item.removeEventListener('mouseenter', addHover);
+          item.removeEventListener('mouseleave', removeHover);
+          item.addEventListener('mouseenter', addHover);
+          item.addEventListener('mouseleave', removeHover);
+        });
+      };
+
+      // Run initially
+      updateHoverState();
+
+      // Re-observe DOM changes to hook up to new elements (like Toast notifications)
+      const observer = new MutationObserver(() => {
+        updateHoverState();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
 });
