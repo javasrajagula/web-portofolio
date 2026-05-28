@@ -513,6 +513,132 @@ input, textarea, button {
 }
 
 /* -------------------------------------------------------------
+ * DESKTOP SETTINGS DROPDOWN (GEAR ICON PANEL)
+ * ------------------------------------------------------------- */
+.settings-wrapper-desktop {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Active gear button spin animation */
+.settings-wrapper-desktop #settings-toggle.active {
+  background-color: var(--color-pink);
+  transform: translate(-3px, -3px) rotate(45deg);
+  box-shadow: 6px 6px 0px var(--border-color);
+}
+
+/* Floating panel — hidden by default */
+.settings-dropdown {
+  position: absolute;
+  top: calc(100% + 18px);
+  right: 0;
+  width: 310px;
+  background-color: var(--bg-secondary);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-flat-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 200;
+  /* Hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  pointer-events: none;
+  transform-origin: top right;
+  transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Visible state */
+.settings-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Arrow caret pointing up */
+.settings-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  width: 18px;
+  height: 10px;
+  background-color: var(--border-color);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.settings-dropdown::after {
+  content: '';
+  position: absolute;
+  top: -7px;
+  right: 18px;
+  width: 14px;
+  height: 8px;
+  background-color: var(--bg-secondary);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  z-index: 1;
+}
+
+.settings-title-desktop {
+  font-family: var(--font-alt);
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #121212;
+  background-color: var(--color-pink);
+  border: var(--border-thick);
+  padding: 5px 14px;
+  display: inline-block;
+  align-self: flex-start;
+  box-shadow: var(--shadow-flat-sm);
+}
+
+.settings-item-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.settings-item-desktop:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Palette row: stack label above the widget */
+.settings-item-desktop:last-child {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.settings-item-desktop:last-child .palette-switcher-wrapper {
+  width: 100%;
+  height: 40px;
+}
+
+.settings-item-desktop:last-child .palette-select {
+  font-size: 0.8rem;
+}
+
+.settings-item-label {
+  font-family: var(--font-alt);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+/* -------------------------------------------------------------
  * HERO SECTION
  * ------------------------------------------------------------- */
 .hero-container {
@@ -1924,9 +2050,8 @@ body.konami-mode .toast {
     right: 0;
   }
 
-  .header-actions #sound-toggle,
-  .header-actions .palette-switcher-wrapper,
-  .header-actions .color-picker-wrapper {
+  /* Hide desktop gear settings panel on mobile/tablet — mobile has its own nav drawer settings */
+  .settings-wrapper-desktop {
     display: none !important;
   }
   

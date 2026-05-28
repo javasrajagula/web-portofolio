@@ -79,7 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'form-email': 'Email',
       'form-message': 'Pesan',
       'form-submit': 'Kirim Pesan',
-      'footer-copy': '&copy; 2026 Narendra Javas Reswara. Seluruh hak cipta dilindungi.'
+      'footer-copy': '&copy; 2026 Narendra Javas Reswara. Seluruh hak cipta dilindungi.',
+      'settings-sound': 'Efek Suara',
+      'settings-accent': 'Warna Aksen',
+      'settings-palette': 'Skema Warna'
     },
     en: {
       'settings-title': 'Settings',
@@ -157,7 +160,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'form-email': 'Email Address',
       'form-message': 'Message',
       'form-submit': 'Send Message',
-      'footer-copy': '&copy; 2026 Narendra Javas Reswara. All rights reserved.'
+      'footer-copy': '&copy; 2026 Narendra Javas Reswara. All rights reserved.',
+      'settings-sound': 'Sound Effects',
+      'settings-accent': 'Accent Color',
+      'settings-palette': 'Color Scheme'
     }
   };
 
@@ -463,6 +469,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+
+  /* ==========================================
+   * 1b. DESKTOP SETTINGS DROPDOWN (GEAR ICON)
+   * ========================================== */
+  const settingsToggleBtn = document.getElementById('settings-toggle');
+  const settingsDropdown = document.getElementById('settings-dropdown');
+
+  if (settingsToggleBtn && settingsDropdown) {
+    // Toggle panel open/close
+    settingsToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = settingsDropdown.classList.contains('active');
+      settingsDropdown.classList.toggle('active');
+      settingsToggleBtn.classList.toggle('active');
+      playClickSound();
+
+      // Close mobile nav if open
+      if (!isOpen && navMenu.classList.contains('active')) {
+        toggleMenu();
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      const settingsWrapper = document.querySelector('.settings-wrapper-desktop');
+      if (settingsWrapper && !settingsWrapper.contains(e.target)) {
+        settingsDropdown.classList.remove('active');
+        settingsToggleBtn.classList.remove('active');
+      }
+    });
+
+    // Close when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && settingsDropdown.classList.contains('active')) {
+        settingsDropdown.classList.remove('active');
+        settingsToggleBtn.classList.remove('active');
+      }
+    });
+  }
 
   /* ==========================================
    * 2. STICKY NAVBAR & BACK-TO-TOP BUTTON
