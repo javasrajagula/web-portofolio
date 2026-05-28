@@ -1696,6 +1696,33 @@ body.konami-mode .skill-badge {
   text-transform: uppercase;
 }
 
+/* Scale down font sizes in Konami mode because 'Press Start 2P' is very large */
+body.konami-mode h1 { font-size: 2.2rem !important; line-height: 1.4 !important; }
+body.konami-mode h2 { font-size: 1.5rem !important; line-height: 1.4 !important; }
+body.konami-mode h3 { font-size: 1.2rem !important; }
+body.konami-mode h4 { font-size: 0.95rem !important; }
+body.konami-mode p, 
+body.konami-mode span, 
+body.konami-mode input, 
+body.konami-mode textarea, 
+body.konami-mode a {
+  font-size: 0.72rem !important;
+  line-height: 1.6 !important;
+}
+body.konami-mode .logo { font-size: 1.1rem !important; }
+body.konami-mode .btn { font-size: 0.65rem !important; padding: 10px 20px !important; }
+body.konami-mode .nav-link { font-size: 0.65rem !important; padding: 6px 12px !important; }
+body.konami-mode .section-title { font-size: 1.6rem !important; }
+body.konami-mode .section-title span { padding: 0 10px !important; }
+body.konami-mode .hero-subtitle { font-size: 1.1rem !important; }
+body.konami-mode .hero-tagline { font-size: 0.6rem !important; }
+body.konami-mode .skill-percent { font-size: 0.65rem !important; }
+body.konami-mode .timeline-desc { font-size: 0.68rem !important; }
+body.konami-mode .contact-detail-item h4 { font-size: 0.6rem !important; }
+body.konami-mode .contact-detail-item p, body.konami-mode .contact-detail-item a { font-size: 0.68rem !important; }
+body.konami-mode .footer p { font-size: 0.65rem !important; }
+
+
 body.konami-mode :root, 
 body.konami-mode [data-theme="dark"], 
 body.konami-mode [data-theme="light"] {
