@@ -320,10 +320,18 @@
     <section class="projects section" id="projects">
       <div class="container">
         <h2 class="section-title">Karya & <span class="gradient-text">Proyek</span> Terbaik</h2>
+        
+        <!-- Project Filter Buttons -->
+        <div class="project-filters">
+          <button class="filter-btn active" data-filter="all">Semua</button>
+          <button class="filter-btn" data-filter="web-app">Aplikasi Web</button>
+          <button class="filter-btn" data-filter="animation">Animasi</button>
+        </div>
+
         <div class="projects-grid">
           
           <!-- Project 1 -->
-          <article class="project-card">
+          <article class="project-card" data-category="web-app">
             <div class="project-image-wrapper">
               <img src="assets/images/project_javas_web.png" alt="Pratinjau Proyek Javas Bio Link" class="project-image" loading="lazy" width="360" height="225">
               <div class="project-overlay">
@@ -352,7 +360,7 @@
           </article>
 
           <!-- Project 2 -->
-          <article class="project-card">
+          <article class="project-card" data-category="animation">
             <div class="project-image-wrapper">
               <img src="assets/images/project_javas_web_2.png" alt="Pratinjau Proyek Javas Space Theme" class="project-image" loading="lazy" width="360" height="225">
               <div class="project-overlay">
@@ -381,7 +389,7 @@
           </article>
 
           <!-- Project 3 -->
-          <article class="project-card">
+          <article class="project-card" data-category="web-app">
             <div class="project-image-wrapper">
               <img src="assets/images/project_academy_os.png" alt="Pratinjau Proyek Academy OS" class="project-image" loading="lazy" width="360" height="225">
               <div class="project-overlay">
@@ -460,6 +468,33 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- Retro Terminal Section -->
+    <section class="terminal-section section" id="terminal">
+      <div class="container">
+        <h2 class="section-title">Retro <span class="gradient-text">Terminal</span></h2>
+        <div class="terminal-container">
+          <div class="terminal-header">
+            <div class="terminal-buttons">
+              <span class="term-btn close"></span>
+              <span class="term-btn minimize"></span>
+              <span class="term-btn maximize"></span>
+            </div>
+            <div class="terminal-title">javas@dev-machine:~</div>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <div class="terminal-line">Selamat datang di Javas DevMachine v1.0.0!</div>
+            <div class="terminal-line">Ketik <span class="terminal-highlight">help</span> untuk melihat daftar perintah yang tersedia.</div>
+            <br>
+            <div class="terminal-output" id="terminal-output"></div>
+            <div class="terminal-input-line">
+              <span class="terminal-prompt">javas@dev-machine:~$</span>
+              <input type="text" id="terminal-input" autocomplete="off" aria-label="Terminal Input">
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

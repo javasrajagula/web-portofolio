@@ -494,12 +494,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (response.status === 200 || result.success) {
           showToast(`Halo ${nameField.value.trim()}, pesan Anda telah berhasil dikirim!`);
+          triggerConfetti();
+          playSuccessMelody();
           contactForm.reset();
         } else {
           showToast(result.message || 'Gagal mengirim pesan, coba lagi nanti.', 'error');
+          playErrorSound();
         }
       } catch (error) {
         showToast('Terjadi kesalahan koneksi internet.', 'error');
+        playErrorSound();
       } finally {
         // Restore Button state
         submitButton.disabled = false;
@@ -552,6 +556,297 @@ document.addEventListener('DOMContentLoaded', () => {
         updateHoverState();
       });
       observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  /* ==========================================
+   * 7. PROJECT FILTER LOGIC
+   * ========================================== */
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filterValue = btn.getAttribute('data-filter');
+      
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      projectCards.forEach(card => {
+        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+          card.style.display = 'flex';
+          setTimeout(() => {
+            card.classList.remove('fade-out');
+          }, 20);
+        } else {
+          card.classList.add('fade-out');
+          setTimeout(() => {
+            if (card.classList.contains('fade-out')) {
+              card.style.display = 'none';
+            }
+          }, 350);
+        }
+      });
+    });
+  });
+
+  /* ==========================================
+   * 8. RETRO TERMINAL INTERACTIVE CLI
+   * ========================================== */
+  const termInput = document.getElementById('terminal-input');
+  const termOutput = document.getElementById('terminal-output');
+  const termBody = document.getElementById('terminal-body');
+
+  function playKeySound() {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(800 + Math.random() * 200, ctx.currentTime);
+      
+      gain.gain.setValueAtTime(0.015, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.03);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 0.03);
+    } catch (e) {}
+  }
+
+  function playErrorSound() {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(120, ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(80, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch (e) {}
+  }
+
+  function playSecretSound() {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const now = ctx.currentTime;
+      const freqs = [300, 450, 600, 900, 1200];
+      freqs.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        gain.gain.setValueAtTime(0.03, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.3);
+      });
+    } catch (e) {}
+  }
+
+  function playSuccessMelody() {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const now = ctx.currentTime;
+      
+      const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        
+        gain.gain.setValueAtTime(0.04, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.15);
+        
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.15);
+      });
+    } catch (e) {}
+  }
+
+  function triggerConfetti() {
+    const btn = document.getElementById('contact-submit');
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2 + window.scrollX;
+    const startY = rect.top + rect.height / 2 + window.scrollY;
+
+    const colors = ['#FFD93D', '#6BCB77', '#4D96FF', '#FF6B6B', '#B1AFFF', '#FF9F29'];
+
+    for (let i = 0; i < 60; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'confetti-particle';
+      
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.backgroundColor = color;
+      
+      particle.style.left = `${startX}px`;
+      particle.style.top = `${startY}px`;
+
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = 150 + Math.random() * 250;
+      const destX = Math.cos(angle) * velocity;
+      const destY = -Math.abs(Math.sin(angle)) * velocity - (50 + Math.random() * 100);
+      const rotation = Math.random() * 720;
+
+      particle.style.setProperty('--x-fallback', `${destX}px`);
+      particle.style.setProperty('--y-fallback', `${destY}px`);
+      particle.style.setProperty('--r-fallback', `${rotation}deg`);
+
+      const size = 6 + Math.random() * 8;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+
+      document.body.appendChild(particle);
+
+      particle.addEventListener('animationend', () => {
+        particle.remove();
+      });
+    }
+  }
+
+  function handleCommand(cmd) {
+    const cleanCmd = cmd.trim().toLowerCase();
+    let output = '';
+    let isError = false;
+    let isSecret = false;
+    
+    // Print prompt and command first
+    const userLine = document.createElement('div');
+    userLine.className = 'terminal-line';
+    userLine.innerHTML = `<span class="terminal-prompt">javas@dev-machine:~$</span> ${escapeHTML(cmd)}`;
+    termOutput.appendChild(userLine);
+
+    switch (cleanCmd) {
+      case 'help':
+        output = `Perintah yang tersedia:<br>
+- <span class="terminal-highlight">help</span>     : Menampilkan daftar perintah ini.<br>
+- <span class="terminal-highlight">about</span>    : Menampilkan info profil singkat Narendra Javas Reswara.<br>
+- <span class="terminal-highlight">skills</span>   : Menampilkan keahlian utama dan persentase penguasaan.<br>
+- <span class="terminal-highlight">projects</span> : Menampilkan proyek-proyek utama yang pernah dibuat.<br>
+- <span class="terminal-highlight">wa</span>       : Menampilkan kontak WhatsApp Javas.<br>
+- <span class="terminal-highlight">secret</span>   : Perintah rahasia luar angkasa.<br>
+- <span class="terminal-highlight">clear</span>    : Membersihkan layar terminal.`;
+        break;
+      case 'about':
+        output = `<span class="terminal-info">=== PROFIL ===</span><br>
+Nama: Narendra Javas Reswara<br>
+Peran: Frontend Developer & UI/UX Enthusiast<br>
+Pendidikan: SMKN 2 Purworejo (Manajemen Perkantoran & Layanan Bisnis)<br>
+Fokus: Membangun aplikasi web modern dengan antarmuka premium, clean code, dan fungsionalitas tinggi.`;
+        break;
+      case 'skills':
+        output = `<span class="terminal-info">=== KEAHLIAN ===</span><br>
+HTML/CSS   : [■■■■■■■■■■■■■■■□] 95%<br>
+JavaScript : [■■■■■■■■■■■■■■□□] 90%<br>
+React/Next : [■■■■■■■■■■■■■□□□] 85%<br>
+Laravel    : [■■■■■■■■■■■□□□□□] 80%<br>
+MySQL/APIs : [■■■■■■■■■■■■■□□□] 85%`;
+        break;
+      case 'projects':
+        output = `<span class="terminal-info">=== PROYEK UTAMA ===</span><br>
+1. <span class="terminal-highlight">Javas Bio Link</span> - Bio Link interaktif glassmorphism + partikel canvas.<br>
+2. <span class="terminal-highlight">Javas Space Theme</span> - Halaman bertema galaksi dengan animasi bintang.<br>
+3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS terintegrasi dengan tutor AI & React Flow.`;
+        break;
+      case 'wa':
+        output = `<span class="terminal-info">=== HUBUNGI SAYA ===</span><br>
+WhatsApp: +62 853 3812 3425<br>
+Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="color: var(--color-yellow); text-decoration: underline;">https://wa.me/6285338123425</a>`;
+        break;
+      case 'secret':
+        isSecret = true;
+        output = `<pre style="color: var(--color-pink); font-family: inherit; margin: 10px 0;">
+     .     *     .     .
+        .   / \\   .
+           |   |
+          /|   |\\
+         /_|___|_\\
+           / | \\
+          /  |  \\
+         </pre>
+<span class="terminal-highlight">Selamat! Anda menemukan Easter Egg luar angkasa! 🚀🌌</span><br>
+"Jelajahi terus kosmos pemrograman tanpa batas!"`;
+        break;
+      case 'clear':
+        termOutput.innerHTML = '';
+        return;
+      default:
+        isError = true;
+        output = `<span class="terminal-error">Perintah tidak dikenal: "${escapeHTML(cmd)}". Ketik <span class="terminal-highlight">help</span> untuk daftar perintah.</span>`;
+        break;
+    }
+
+    const outLine = document.createElement('div');
+    outLine.className = 'terminal-line';
+    outLine.innerHTML = output;
+    termOutput.appendChild(outLine);
+
+    if (isError) {
+      playErrorSound();
+    } else if (isSecret) {
+      playSecretSound();
+    } else {
+      playClickSound();
+    }
+
+    termBody.scrollTop = termBody.scrollHeight;
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+    );
+  }
+
+  if (termInput) {
+    termInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const inputVal = termInput.value;
+        termInput.value = '';
+        handleCommand(inputVal);
+      } else if (e.key.length === 1 || e.key === 'Backspace') {
+        playKeySound();
+      }
+    });
+
+    if (termBody) {
+      termBody.addEventListener('click', () => {
+        termInput.focus();
+      });
     }
   }
 });
