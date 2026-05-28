@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const translations = {
     id: {
+      'settings-title': 'Pengaturan',
       toastPalette: "Skema Warna: ",
       contactLoading: "Mengirim pesan...",
       contactSuccess: "Pesan terkirim!",
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'footer-copy': '&copy; 2026 Narendra Javas Reswara. Seluruh hak cipta dilindungi.'
     },
     en: {
+      'settings-title': 'Settings',
       toastPalette: "Color Palette: ",
       contactLoading: "Sending message...",
       contactSuccess: "Message sent!",
@@ -162,22 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================
    * 0. RETRO SOUND EFFECTS (WEB AUDIO API)
    * ========================================== */
-  const soundToggleBtn = document.getElementById('sound-toggle');
-  const soundOnIcon = document.querySelector('.sound-on-icon');
-  const soundOffIcon = document.querySelector('.sound-off-icon');
+  const soundToggleBtns = document.querySelectorAll('.sound-toggle-btn');
+  const soundOnIcons = document.querySelectorAll('.sound-on-icon');
+  const soundOffIcons = document.querySelectorAll('.sound-off-icon');
 
   let soundEnabled = localStorage.getItem('portfolio-sound') !== 'disabled';
 
   const setSoundState = (enabled) => {
     soundEnabled = enabled;
     localStorage.setItem('portfolio-sound', enabled ? 'enabled' : 'disabled');
-    if (enabled) {
-      soundOnIcon.style.display = 'block';
-      soundOffIcon.style.display = 'none';
-    } else {
-      soundOnIcon.style.display = 'none';
-      soundOffIcon.style.display = 'block';
-    }
+    soundOnIcons.forEach(icon => icon.style.display = enabled ? 'block' : 'none');
+    soundOffIcons.forEach(icon => icon.style.display = enabled ? 'none' : 'block');
   };
 
   // Initialize sound state
@@ -245,14 +242,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Click handler for Sound Toggle
-  if (soundToggleBtn) {
-    soundToggleBtn.addEventListener('click', () => {
+  soundToggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
       setSoundState(!soundEnabled);
       if (soundEnabled) {
         playClickSound();
       }
     });
-  }
+  });
 
   // Bind click sounds to all interactive elements except toggle buttons
   const setupClickSounds = () => {
@@ -275,7 +272,9 @@ document.addEventListener('DOMContentLoaded', () => {
    * 0.6. RANDOM COLOR PALETTE GENERATOR
    * ========================================== */
   const paletteShuffleBtn = document.getElementById('palette-shuffle');
+  const paletteShuffleBtnMobile = document.getElementById('palette-shuffle-mobile');
   const paletteSelect = document.getElementById('palette-select');
+  const paletteSelectMobile = document.getElementById('palette-select-mobile');
 
   const palettes = [
     {
@@ -346,53 +345,55 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.style.setProperty(property, value);
     });
 
-    if (paletteSelect) {
-      paletteSelect.value = index;
-    }
+    if (paletteSelect) paletteSelect.value = index;
+    if (paletteSelectMobile) paletteSelectMobile.value = index;
   };
 
   // Initialize saved palette
   if (currentPaletteIndex !== 0) {
     applyPalette(currentPaletteIndex);
   } else {
-    if (paletteSelect) {
-      paletteSelect.value = 0;
-    }
+    if (paletteSelect) paletteSelect.value = 0;
+    if (paletteSelectMobile) paletteSelectMobile.value = 0;
   }
+
+  // Palette select change handler
+  const handlePaletteChange = (e) => {
+    const index = parseInt(e.target.value, 10);
+    applyPalette(index);
+    playClickSound();
+    showToast(`${translations[currentLang].toastPalette}${palettes[index].name}`);
+    
+    // Reset custom accent color when selecting standard palettes
+    localStorage.removeItem('portfolio-custom-accent');
+    const customPicker = document.getElementById('accent-color-picker');
+    const customPickerMobile = document.getElementById('accent-color-picker-mobile');
+    if (customPicker) customPicker.value = palettes[index].colors['--color-yellow'];
+    if (customPickerMobile) customPickerMobile.value = palettes[index].colors['--color-yellow'];
+  };
 
   // Palette select change listener
-  if (paletteSelect) {
-    paletteSelect.addEventListener('change', (e) => {
-      const index = parseInt(e.target.value, 10);
-      applyPalette(index);
-      playClickSound();
-      showToast(`${translations[currentLang].toastPalette}${palettes[index].name}`);
-      
-      // Reset custom accent color when selecting standard palettes
-      localStorage.removeItem('portfolio-custom-accent');
-      const customPicker = document.getElementById('accent-color-picker');
-      if (customPicker) {
-        customPicker.value = palettes[index].colors['--color-yellow'];
-      }
-    });
-  }
+  if (paletteSelect) paletteSelect.addEventListener('change', handlePaletteChange);
+  if (paletteSelectMobile) paletteSelectMobile.addEventListener('change', handlePaletteChange);
+
+  // Palette Shuffle click handler
+  const handlePaletteShuffle = () => {
+    const nextIndex = (currentPaletteIndex + 1) % palettes.length;
+    applyPalette(nextIndex);
+    playClickSound();
+    showToast(`${translations[currentLang].toastPalette}${palettes[nextIndex].name}`);
+    
+    // Reset custom accent color when selecting standard palettes
+    localStorage.removeItem('portfolio-custom-accent');
+    const customPicker = document.getElementById('accent-color-picker');
+    const customPickerMobile = document.getElementById('accent-color-picker-mobile');
+    if (customPicker) customPicker.value = palettes[nextIndex].colors['--color-yellow'];
+    if (customPickerMobile) customPickerMobile.value = palettes[nextIndex].colors['--color-yellow'];
+  };
 
   // Palette Shuffle click listener
-  if (paletteShuffleBtn) {
-    paletteShuffleBtn.addEventListener('click', () => {
-      const nextIndex = (currentPaletteIndex + 1) % palettes.length;
-      applyPalette(nextIndex);
-      playClickSound();
-      showToast(`${translations[currentLang].toastPalette}${palettes[nextIndex].name}`);
-      
-      // Reset custom accent color when selecting standard palettes
-      localStorage.removeItem('portfolio-custom-accent');
-      const customPicker = document.getElementById('accent-color-picker');
-      if (customPicker) {
-        customPicker.value = palettes[nextIndex].colors['--color-yellow'];
-      }
-    });
-  }
+  if (paletteShuffleBtn) paletteShuffleBtn.addEventListener('click', handlePaletteShuffle);
+  if (paletteShuffleBtnMobile) paletteShuffleBtnMobile.addEventListener('click', handlePaletteShuffle);
 
   /* ==========================================
    * 0.7. THEME TOGGLE (LIGHT/DARK NEOBRUTALISM)
@@ -1145,13 +1146,18 @@ Or visit: <a href="https://wa.me/6285338123425" target="_blank" style="color: va
 
     // 6. Color palette options update
     const pSelect = document.getElementById('palette-select');
-    if (pSelect && pSelect.options.length >= 5) {
-      pSelect.options[0].text = currentLang === 'id' ? 'Default Retro' : 'Default Retro';
-      pSelect.options[1].text = currentLang === 'id' ? 'Cyberpunk Neon' : 'Cyberpunk Neon';
-      pSelect.options[2].text = currentLang === 'id' ? 'Vaporwave 80-an' : '80s Vaporwave';
-      pSelect.options[3].text = currentLang === 'id' ? 'Acid Rave' : 'Acid Rave';
-      pSelect.options[4].text = currentLang === 'id' ? 'Citrus Punch' : 'Citrus Punch';
-    }
+    const pSelectMobile = document.getElementById('palette-select-mobile');
+    const translateOptions = (selectElem) => {
+      if (selectElem && selectElem.options.length >= 5) {
+        selectElem.options[0].text = currentLang === 'id' ? 'Default Retro' : 'Default Retro';
+        selectElem.options[1].text = currentLang === 'id' ? 'Cyberpunk Neon' : 'Cyberpunk Neon';
+        selectElem.options[2].text = currentLang === 'id' ? 'Vaporwave 80-an' : '80s Vaporwave';
+        selectElem.options[3].text = currentLang === 'id' ? 'Acid Rave' : 'Acid Rave';
+        selectElem.options[4].text = currentLang === 'id' ? 'Citrus Punch' : 'Citrus Punch';
+      }
+    };
+    translateOptions(pSelect);
+    translateOptions(pSelectMobile);
   };
 
   // Language toggle listener
@@ -1175,30 +1181,43 @@ Or visit: <a href="https://wa.me/6285338123425" target="_blank" style="color: va
    * 9. DYNAMIC CUSTOM ACCENT COLOR PICKER
    * ========================================== */
   const customColorPicker = document.getElementById('accent-color-picker');
+  const customColorPickerMobile = document.getElementById('accent-color-picker-mobile');
   
-  if (customColorPicker) {
-    // Initialise saved custom accent or current palette active color
-    const savedCustomAccent = localStorage.getItem('portfolio-custom-accent');
-    if (savedCustomAccent) {
-      document.documentElement.style.setProperty('--color-yellow', savedCustomAccent);
-      customColorPicker.value = savedCustomAccent;
-    } else {
-      const activePalette = palettes[currentPaletteIndex];
-      if (activePalette) {
-        customColorPicker.value = activePalette.colors['--color-yellow'];
-      }
+  const syncCustomAccentColor = (color) => {
+    document.documentElement.style.setProperty('--color-yellow', color);
+    localStorage.setItem('portfolio-custom-accent', color);
+    if (customColorPicker) customColorPicker.value = color;
+    if (customColorPickerMobile) customColorPickerMobile.value = color;
+  };
+
+  const savedCustomAccent = localStorage.getItem('portfolio-custom-accent');
+  if (savedCustomAccent) {
+    syncCustomAccentColor(savedCustomAccent);
+  } else {
+    const activePalette = palettes[currentPaletteIndex];
+    if (activePalette) {
+      const color = activePalette.colors['--color-yellow'];
+      if (customColorPicker) customColorPicker.value = color;
+      if (customColorPickerMobile) customColorPickerMobile.value = color;
     }
+  }
 
-    customColorPicker.addEventListener('input', (e) => {
-      const color = e.target.value;
-      document.documentElement.style.setProperty('--color-yellow', color);
-      localStorage.setItem('portfolio-custom-accent', color);
-    });
+  const handleColorInput = (e) => {
+    syncCustomAccentColor(e.target.value);
+  };
 
-    customColorPicker.addEventListener('change', () => {
-      playClickSound();
-      showToast(translations[currentLang].customAccentApplied);
-    });
+  const handleColorChange = () => {
+    playClickSound();
+    showToast(translations[currentLang].customAccentApplied);
+  };
+
+  if (customColorPicker) {
+    customColorPicker.addEventListener('input', handleColorInput);
+    customColorPicker.addEventListener('change', handleColorChange);
+  }
+  if (customColorPickerMobile) {
+    customColorPickerMobile.addEventListener('input', handleColorInput);
+    customColorPickerMobile.addEventListener('change', handleColorChange);
   }
 
   /* ==========================================

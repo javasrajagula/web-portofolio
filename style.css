@@ -1851,6 +1851,22 @@ body.konami-mode .toast {
   font-size: 0.8rem;
 }
 
+/* Mobile settings panel inside sidebar */
+.nav-settings-mobile {
+  display: none;
+}
+
+#accent-color-picker-mobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
 /* -------------------------------------------------------------
  * MEDIA QUERIES (RESPONSIVENESS)
  * ------------------------------------------------------------- */
@@ -1903,6 +1919,51 @@ body.konami-mode .toast {
   
   .nav.active {
     right: 0;
+  }
+
+  .header-actions #sound-toggle,
+  .header-actions .palette-switcher-wrapper,
+  .header-actions .color-picker-wrapper {
+    display: none !important;
+  }
+  
+  .nav-settings-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+    border-top: var(--border-thick);
+    padding-top: 25px;
+  }
+  
+  .settings-title-mobile {
+    font-family: var(--font-alt);
+    font-size: 0.9rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    background-color: var(--color-pink);
+    border: var(--border-thick);
+    padding: 4px 12px;
+    align-self: flex-start;
+    box-shadow: var(--shadow-flat-sm);
+  }
+  
+  .settings-row-mobile {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .nav-settings-mobile .palette-switcher-wrapper {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-settings-mobile .palette-select {
+    flex-grow: 1;
+    width: 100%;
   }
   
   .nav-list {
