@@ -129,9 +129,20 @@ input, textarea, button {
 /* -------------------------------------------------------------
  * FLOATING GEOMETRIC SHAPES (BACKGROUND DECORATION)
  * ------------------------------------------------------------- */
-.geo-shape {
+.geo-shape-wrap {
   position: absolute;
+  pointer-events: none;
   z-index: -1;
+  transition: transform 0.25s cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+.shape-1-wrap { top: 15%; left: 5%; }
+.shape-2-wrap { top: 35%; right: 8%; }
+.shape-3-wrap { top: 65%; left: 8%; }
+.shape-4-wrap { bottom: 15%; right: 12%; }
+
+.geo-shape {
+  position: relative;
   border: var(--border-thick);
   background-color: var(--bg-secondary);
   box-shadow: var(--shadow-flat-sm);
@@ -143,8 +154,6 @@ input, textarea, button {
   width: 50px;
   height: 50px;
   background-color: var(--color-yellow);
-  top: 15%;
-  left: 5%;
   transform: rotate(15deg);
   animation: rotateShape 25s linear infinite;
 }
@@ -154,8 +163,6 @@ input, textarea, button {
   height: 60px;
   background-color: var(--color-pink);
   border-radius: 50%;
-  top: 35%;
-  right: 8%;
   animation: floatShape 8s ease-in-out infinite alternate;
 }
 
@@ -163,8 +170,6 @@ input, textarea, button {
   width: 45px;
   height: 45px;
   background-color: var(--color-blue);
-  top: 65%;
-  left: 8%;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   /* clip-path hides the border unless we use special styling, but clip-path fits neobrutalism well */
   border: none;
@@ -177,8 +182,6 @@ input, textarea, button {
   width: 55px;
   height: 55px;
   background-color: var(--color-purple);
-  bottom: 15%;
-  right: 12%;
   transform: rotate(-10deg);
   animation: rotateShape 35s linear infinite reverse;
 }
@@ -1647,6 +1650,112 @@ input, textarea, button {
     transform: translate(var(--x-fallback), var(--y-fallback)) rotate(var(--r-fallback)) scale(0.3);
     opacity: 0;
   }
+}
+
+/* -------------------------------------------------------------
+ * CUSTOM ACCENT COLOR PICKER
+ * ------------------------------------------------------------- */
+.color-picker-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#accent-color-picker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* -------------------------------------------------------------
+ * RETRO KONAMI MODE (ARCADE MODE)
+ * ------------------------------------------------------------- */
+body.konami-mode {
+  font-family: 'Press Start 2P', monospace !important;
+  background-color: #050508 !important;
+  color: #39ff14 !important; /* neon matrix green */
+  image-rendering: pixelated;
+}
+
+body.konami-mode h1,
+body.konami-mode h2,
+body.konami-mode h3,
+body.konami-mode h4,
+body.konami-mode .logo,
+body.konami-mode .btn,
+body.konami-mode .nav-link,
+body.konami-mode .timeline-date,
+body.konami-mode .skill-badge {
+  font-family: 'Press Start 2P', monospace !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase;
+}
+
+body.konami-mode :root, 
+body.konami-mode [data-theme="dark"], 
+body.konami-mode [data-theme="light"] {
+  --bg-primary: #050508;
+  --bg-secondary: #101018;
+  --bg-card: #101018;
+  --border-color: #39ff14;
+  --text-primary: #39ff14;
+  --text-secondary: #00cc33;
+  --text-muted: #009922;
+  --color-yellow: #39ff14;
+  --color-pink: #ff007f;
+  --color-blue: #00ffff;
+  --color-green: #39ff14;
+  --color-purple: #bd00ff;
+  --color-orange: #ff5f00;
+}
+
+body.konami-mode .hero-image {
+  filter: grayscale(1) contrast(2) brightness(0.8) sepia(1) hue-rotate(80deg) !important;
+}
+
+body.konami-mode .geo-shape {
+  background-color: #101018 !important;
+  border-color: #39ff14 !important;
+  box-shadow: 3px 3px 0px #39ff14 !important;
+}
+
+body.konami-mode .btn,
+body.konami-mode .timeline-content,
+body.konami-mode .value-item,
+body.konami-mode .project-card,
+body.konami-mode .contact-form-wrapper,
+body.konami-mode .skills-category-card,
+body.konami-mode .info-card,
+body.konami-mode .custom-cursor {
+  border-color: #39ff14 !important;
+  box-shadow: 6px 6px 0px #39ff14 !important;
+  background-color: #101018 !important;
+  color: #39ff14 !important;
+}
+
+body.konami-mode .btn:hover {
+  background-color: #39ff14 !important;
+  color: #050508 !important;
+}
+
+body.konami-mode .custom-cursor {
+  background-color: #39ff14 !important;
+}
+
+body.konami-mode .custom-cursor.hover {
+  background-color: #ff007f !important;
+}
+
+body.konami-mode .toast {
+  border-color: #39ff14 !important;
+  background-color: #101018 !important;
+  color: #39ff14 !important;
+  font-size: 0.8rem;
 }
 
 /* -------------------------------------------------------------

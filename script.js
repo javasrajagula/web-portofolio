@@ -199,6 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
       applyPalette(nextIndex);
       playClickSound();
       showToast(`Skema Warna: ${palettes[nextIndex].name}`);
+      
+      // Reset custom accent color when selecting standard palettes
+      localStorage.removeItem('portfolio-custom-accent');
+      const customPicker = document.getElementById('accent-color-picker');
+      if (customPicker) {
+        customPicker.value = palettes[nextIndex].colors['--color-yellow'];
+      }
     });
   }
 
@@ -848,5 +855,131 @@ Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="colo
         termInput.focus();
       });
     }
+  }
+
+  /* ==========================================
+   * 9. DYNAMIC CUSTOM ACCENT COLOR PICKER
+   * ========================================== */
+  const customColorPicker = document.getElementById('accent-color-picker');
+  
+  if (customColorPicker) {
+    // Initialise saved custom accent or current palette active color
+    const savedCustomAccent = localStorage.getItem('portfolio-custom-accent');
+    if (savedCustomAccent) {
+      document.documentElement.style.setProperty('--color-yellow', savedCustomAccent);
+      customColorPicker.value = savedCustomAccent;
+    } else {
+      const activePalette = palettes[currentPaletteIndex];
+      if (activePalette) {
+        customColorPicker.value = activePalette.colors['--color-yellow'];
+      }
+    }
+
+    customColorPicker.addEventListener('input', (e) => {
+      const color = e.target.value;
+      document.documentElement.style.setProperty('--color-yellow', color);
+      localStorage.setItem('portfolio-custom-accent', color);
+    });
+
+    customColorPicker.addEventListener('change', () => {
+      playClickSound();
+      showToast(`Warna Aksen Kustom Diterapkan!`);
+    });
+  }
+
+  /* ==========================================
+   * 10. MOUSE COORDINATES PARALLAX (GEOMETRIC SHAPES)
+   * ========================================== */
+  const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  if (hasHover) {
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+      const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+
+      const wrappers = document.querySelectorAll('.geo-shape-wrap');
+      wrappers.forEach(wrap => {
+        const depth = parseFloat(wrap.getAttribute('data-depth')) || 20;
+        const moveX = x * depth;
+        const moveY = y * depth;
+        
+        wrap.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+      });
+    });
+  }
+
+  /* ==========================================
+   * 11. EASTER EGG: RETRO KONAMI CODE (ARCADE MODE)
+   * ========================================== */
+  let konamiIndex = 0;
+  const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+  document.addEventListener('keydown', (e) => {
+    const key = e.key;
+    const requiredKey = konamiPattern[konamiIndex];
+
+    if (key.toLowerCase() === requiredKey.toLowerCase()) {
+      konamiIndex++;
+      if (konamiIndex === konamiPattern.length) {
+        activateKonamiMode();
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = (key.toLowerCase() === konamiPattern[0].toLowerCase()) ? 1 : 0;
+    }
+  });
+
+  function activateKonamiMode() {
+    const isAlreadyActive = document.body.classList.contains('konami-mode');
+    if (isAlreadyActive) {
+      document.body.classList.remove('konami-mode');
+      showToast("CHEATS DEACTIVATED: STANDARD MODE");
+      playToggleSound(false);
+    } else {
+      document.body.classList.add('konami-mode');
+      showToast("CHEATS ACTIVATED: ARCADE MODE ENABLED!");
+      playKonamiVictoryTune();
+    }
+  }
+
+  function playKonamiVictoryTune() {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const now = ctx.currentTime;
+
+      // C Major retro chiptune arpeggio victory sequence
+      const melody = [
+        { note: 261.63, time: 0 },      // C4
+        { note: 329.63, time: 0.08 },   // E4
+        { note: 392.00, time: 0.16 },   // G4
+        { note: 523.25, time: 0.24 },   // C5
+        { note: 659.25, time: 0.32 },   // E5
+        { note: 783.99, time: 0.40 },   // G5
+        { note: 1046.50, time: 0.48 },  // C6
+        { note: 1318.51, time: 0.60 },  // E6
+        { note: 1567.98, time: 0.72 },  // G6
+        { note: 2093.00, time: 0.84 }   // C7
+      ];
+
+      melody.forEach(item => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(item.note, now + item.time);
+        
+        gain.gain.setValueAtTime(0.04, now + item.time);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + item.time + 0.25);
+        
+        osc.start(now + item.time);
+        osc.stop(now + item.time + 0.25);
+      });
+    } catch (e) {}
   }
 });

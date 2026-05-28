@@ -18,18 +18,18 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css?v=1.2">
 </head>
 <body>
 
-  <!-- Background Geometric Shapes for Neobrutalism theme -->
-  <div class="geo-shape shape-1"></div>
-  <div class="geo-shape shape-2"></div>
-  <div class="geo-shape shape-3"></div>
-  <div class="geo-shape shape-4"></div>
+  <!-- Background Geometric Shapes with Parallax Wrappers -->
+  <div class="geo-shape-wrap shape-1-wrap" data-depth="20"><div class="geo-shape shape-1"></div></div>
+  <div class="geo-shape-wrap shape-2-wrap" data-depth="-30"><div class="geo-shape shape-2"></div></div>
+  <div class="geo-shape-wrap shape-3-wrap" data-depth="15"><div class="geo-shape shape-3"></div></div>
+  <div class="geo-shape-wrap shape-4-wrap" data-depth="-25"><div class="geo-shape shape-4"></div></div>
 
   <!-- Header & Navigation -->
   <header class="header" id="header">
@@ -72,6 +72,20 @@
             <circle cx="15.5" cy="8.5" r="1.5" fill="currentColor"></circle>
           </svg>
         </button>
+
+        <!-- Custom Color Picker Widget -->
+        <div class="color-picker-wrapper">
+          <button id="custom-color-btn" class="theme-toggle-btn" aria-label="Custom Accent Color">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path>
+              <path d="M7.5 10.5C8.32843 10.5 9 9.82843 9 9C9 8.17157 8.32843 7.5 7.5 7.5C6.67157 7.5 6 8.17157 6 9C6 9.82843 6.67157 10.5 7.5 10.5Z" fill="currentColor"></path>
+              <path d="M11.5 7.5C12.3284 7.5 13 6.82843 13 6C13 5.17157 12.3284 4.5 11.5 4.5C10.6716 4.5 10 5.17157 10 6C10 6.82843 10.6716 7.5 11.5 7.5Z" fill="currentColor"></path>
+              <path d="M16.5 10.5C17.3284 10.5 18 9.82843 18 9C18 8.17157 17.3284 7.5 16.5 7.5C15.6716 7.5 15 8.17157 15 9C15 9.82843 15.6716 10.5 16.5 10.5Z" fill="currentColor"></path>
+              <path d="M6 14C6 14 7.5 19 12 19C16.5 19 18 14 18 14" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <input type="color" id="accent-color-picker" value="#FFD93D" aria-label="Choose Accent Color">
+        </div>
 
         <div class="theme-toggle-wrapper">
           <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
