@@ -1,7 +1,119 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ==========================================
-   * 0. THEME TOGGLE (LIGHT/DARK NEOBRUTALISM)
+   * 0. RETRO SOUND EFFECTS (WEB AUDIO API)
+   * ========================================== */
+  const soundToggleBtn = document.getElementById('sound-toggle');
+  const soundOnIcon = document.querySelector('.sound-on-icon');
+  const soundOffIcon = document.querySelector('.sound-off-icon');
+
+  let soundEnabled = localStorage.getItem('portfolio-sound') !== 'disabled';
+
+  const setSoundState = (enabled) => {
+    soundEnabled = enabled;
+    localStorage.setItem('portfolio-sound', enabled ? 'enabled' : 'disabled');
+    if (enabled) {
+      soundOnIcon.style.display = 'block';
+      soundOffIcon.style.display = 'none';
+    } else {
+      soundOnIcon.style.display = 'none';
+      soundOffIcon.style.display = 'block';
+    }
+  };
+
+  // Initialize sound state
+  setSoundState(soundEnabled);
+
+  // Synth a quick retro click (8-bit chip blip)
+  const playClickSound = () => {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.type = 'triangle'; // triangle waves sound retro/chiptune
+      osc.frequency.setValueAtTime(550, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.08);
+      
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 0.08);
+    } catch (e) {}
+  };
+
+  // Synth ascending/descending notes for dark/light transitions
+  const playToggleSound = (isDark) => {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.type = 'triangle';
+      const now = ctx.currentTime;
+      
+      if (isDark) {
+        // Ascending chord
+        osc.frequency.setValueAtTime(250, now);
+        osc.frequency.setValueAtTime(375, now + 0.06);
+        osc.frequency.setValueAtTime(500, now + 0.12);
+      } else {
+        // Descending chord
+        osc.frequency.setValueAtTime(500, now);
+        osc.frequency.setValueAtTime(375, now + 0.06);
+        osc.frequency.setValueAtTime(250, now + 0.12);
+      }
+      
+      gain.gain.setValueAtTime(0.05, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+      
+      osc.start();
+      osc.stop(now + 0.2);
+    } catch (e) {}
+  };
+
+  // Click handler for Sound Toggle
+  if (soundToggleBtn) {
+    soundToggleBtn.addEventListener('click', () => {
+      setSoundState(!soundEnabled);
+      if (soundEnabled) {
+        playClickSound();
+      }
+    });
+  }
+
+  // Bind click sounds to all interactive elements except toggle buttons
+  const setupClickSounds = () => {
+    const clickables = document.querySelectorAll('a, button:not(#theme-toggle):not(#sound-toggle), input[type="submit"], input[type="button"], select');
+    clickables.forEach(elem => {
+      elem.removeEventListener('click', playClickSound);
+      elem.addEventListener('click', playClickSound);
+    });
+  };
+  
+  setupClickSounds();
+  
+  // Re-observe dynamic nodes to hook sound click listeners
+  const soundObserver = new MutationObserver(() => {
+    setupClickSounds();
+  });
+  soundObserver.observe(document.body, { childList: true, subtree: true });
+
+  /* ==========================================
+   * 0.7. THEME TOGGLE (LIGHT/DARK NEOBRUTALISM)
    * ========================================== */
   const themeToggleBtn = document.getElementById('theme-toggle');
   const sunIcon = document.querySelector('.sun-icon');
@@ -33,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       setTheme(newTheme);
+      playToggleSound(newTheme === 'dark');
     });
   }
 
