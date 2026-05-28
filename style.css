@@ -537,10 +537,13 @@ input, textarea, button {
   box-shadow: 7px 7px 0px var(--border-color);
 }
 
-#social-hero-github:hover { background-color: var(--color-purple); }
-#social-hero-linkedin:hover { background-color: var(--color-blue); }
+#social-hero-github:hover, #social-footer-github:hover { background-color: var(--color-purple); }
+#social-hero-linkedin:hover, #social-footer-linkedin:hover { background-color: var(--color-blue); }
 #social-hero-email:hover { background-color: var(--color-orange); }
 #social-hero-whatsapp:hover { background-color: var(--color-green); }
+#social-hero-instagram:hover, #social-footer-instagram:hover { background-color: var(--color-pink); }
+#social-hero-x:hover, #social-footer-x:hover { background-color: var(--color-yellow); }
+#social-hero-facebook:hover, #social-footer-facebook:hover { background-color: var(--color-blue); }
 
 .social-link:active {
   transform: translate(1px, 1px);
