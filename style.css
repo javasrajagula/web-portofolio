@@ -1868,7 +1868,7 @@ body.konami-mode .toast {
 /* -------------------------------------------------------------
  * MEDIA QUERIES (RESPONSIVENESS)
  * ------------------------------------------------------------- */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   :root {
     --header-height: 80px;
   }
@@ -1902,8 +1902,9 @@ body.konami-mode .toast {
     position: fixed;
     top: var(--header-height);
     right: -100%;
+    bottom: 0;
     width: 290px;
-    height: calc(100vh - var(--header-height));
+    height: auto;
     background-color: var(--bg-primary);
     border-left: var(--border-thick);
     border-bottom: var(--border-thick);
@@ -1911,6 +1912,7 @@ body.konami-mode .toast {
     box-shadow: -6px 6px 0px var(--border-color);
     transition: right var(--transition-normal) cubic-bezier(0.77, 0.2, 0.05, 1);
     overflow-y: auto; /* Allow scrolling on settings and links! */
+    -webkit-overflow-scrolling: touch;
   }
   
   .nav.active {

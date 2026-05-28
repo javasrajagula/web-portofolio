@@ -446,11 +446,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navMenu.classList.contains('active')) {
       hamburgerIcon.style.display = 'none';
       closeIcon.style.display = 'block';
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
     } else {
       hamburgerIcon.style.display = 'block';
       closeIcon.style.display = 'none';
-      document.body.style.overflow = 'auto';
     }
   };
 
