@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * 5. CONTACT FORM & CUSTOM TOAST NOTIFICATION
    * ========================================== */
   // Dapatkan kunci akses gratis di https://web3forms.com/
-  const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE"; 
+  const WEB3FORMS_ACCESS_KEY = "c0f0777c-3160-495f-949c-b284299184e6"; 
 
   const contactForm = document.getElementById('contact-form');
   const toastContainer = document.getElementById('toast-container');
