@@ -342,6 +342,7 @@ input, textarea, button {
   font-weight: 900;
   letter-spacing: -1px;
   color: var(--text-primary);
+  flex-shrink: 0;
 }
 
 .logo .gradient-text {
@@ -390,11 +391,6 @@ input, textarea, button {
 }
 
 /* Theme Toggle Button */
-.theme-toggle-wrapper {
-  display: flex;
-  align-items: center;
-}
-
 .theme-toggle-btn {
   display: flex;
   align-items: center;
@@ -407,6 +403,7 @@ input, textarea, button {
   box-shadow: var(--shadow-flat-sm);
   cursor: pointer;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  flex-shrink: 0;
 }
 
 [data-theme="dark"] .theme-toggle-btn {
@@ -502,6 +499,7 @@ input, textarea, button {
   align-items: center;
   justify-content: center;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .nav-toggle:hover {
