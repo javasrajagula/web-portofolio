@@ -404,6 +404,11 @@ input, textarea, button {
   cursor: pointer;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   flex-shrink: 0;
+  overflow: visible;
+}
+
+.theme-toggle-btn svg {
+  overflow: visible !important;
 }
 
 [data-theme="dark"] .theme-toggle-btn {
