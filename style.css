@@ -1884,9 +1884,7 @@ body.konami-mode .toast {
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media (max-width: 768px) {
   .logo {
     font-size: 1.45rem;
   }
@@ -1895,15 +1893,6 @@ body.konami-mode .toast {
     padding: 0 16px;
   }
 
-  .section {
-    padding: 90px 0 50px 0;
-  }
-  
-  .section-title {
-    font-size: 2.3rem;
-    margin-bottom: 50px;
-  }
-  
   /* Mobile Navigation Menu */
   .nav-toggle {
     display: flex;
@@ -1921,6 +1910,7 @@ body.konami-mode .toast {
     padding: 40px;
     box-shadow: -6px 6px 0px var(--border-color);
     transition: right var(--transition-normal) cubic-bezier(0.77, 0.2, 0.05, 1);
+    overflow-y: auto; /* Allow scrolling on settings and links! */
   }
   
   .nav.active {
@@ -1980,6 +1970,17 @@ body.konami-mode .toast {
   .nav-link {
     font-size: 1.15rem;
     display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 90px 0 50px 0;
+  }
+  
+  .section-title {
+    font-size: 2.3rem;
+    margin-bottom: 50px;
   }
 
   /* Hero Mobile */
