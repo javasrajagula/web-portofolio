@@ -1,5 +1,164 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  let currentLang = localStorage.getItem('portfolio-lang') === 'en' ? 'en' : 'id';
+
+  const translations = {
+    id: {
+      toastPalette: "Skema Warna: ",
+      contactLoading: "Mengirim pesan...",
+      contactSuccess: "Pesan terkirim!",
+      contactError: "Gagal mengirim pesan.",
+      terminalWelcome: "Selamat datang di portofolio saya!",
+      terminalHelp: "Ketik 'help' untuk perintah.",
+      roleDev: "Pengembang Web",
+      roleDesigner: "Desainer UI/UX",
+      customAccentApplied: "Warna Aksen Kustom Diterapkan!",
+      konamiActivated: "CHEAT DIAKTIFKAN: MODE ARCADE AKTIF!",
+      konamiDeactivated: "CHEAT DINONAKTIFKAN: MODE STANDAR",
+      'nav-home': 'Home',
+      'nav-about': 'Tentang',
+      'nav-skills': 'Keahlian',
+      'nav-projects': 'Proyek',
+      'nav-education': 'Pendidikan',
+      'nav-contact': 'Kontak',
+      'hero-tagline': 'Selamat Datang di Portfolio Saya',
+      'hero-title-prefix': 'Hai, Saya',
+      'hero-subtitle-prefix': 'Saya seorang',
+      'hero-description': 'Web Developer yang berfokus membangun website modern, responsif, dan berkinerja tinggi. Saya mengombinasikan desain UI/UX yang premium dengan kode yang bersih untuk menciptakan pengalaman pengguna terbaik.',
+      'btn-projects': 'Lihat Proyek',
+      'btn-contact': 'Hubungi Saya',
+      'about-title-span': 'Tentang',
+      'about-title-rest': 'Saya',
+      'about-subtitle': 'Siapa Saya?',
+      'about-p1': 'Saya adalah seorang web developer yang fokus membangun website modern, responsif, dan mudah digunakan. Saya memiliki minat besar pada frontend development, UI design, dan pengembangan produk digital yang memiliki dampak nyata.',
+      'about-p2': 'Dengan pengalaman selama 1 tahun terakhir di industri ini, saya telah membantu membangun presence online lewat aplikasi web yang cepat dan intuitif. Saya berkomitmen untuk menulis kode yang bersih (clean code) dan mudah dipelihara.',
+      'val1-title': 'Kualitas Kode',
+      'val1-desc': 'Kode yang bersih, modular, terdokumentasi, dan mudah dipelihara jangka panjang.',
+      'val2-title': 'Desain Berorientasi Pengguna',
+      'val2-desc': 'Memastikan navigasi intuitif, kegunaan maksimal, dan visual yang memukau.',
+      'card1-label': 'Tahun Pengalaman',
+      'card2-label': 'Proyek Selesai',
+      'skills-title-prefix': 'Daftar',
+      'skills-title-span': 'Keahlian',
+      'skills-cat1': 'Frontend Development',
+      'skills-cat2': 'Backend Development',
+      'skills-cat3': 'Tools & Platforms',
+      'skills-cat4': 'Soft Skills',
+      'soft-skill-1': 'Problem Solving',
+      'soft-skill-2': 'Komunikasi Efektif',
+      'soft-skill-3': 'Kerja Sama Tim',
+      'soft-skill-4': 'Manajemen Waktu',
+      'soft-skill-5': 'Adaptabilitas',
+      'projects-title-prefix': 'Karya &',
+      'projects-title-span': 'Proyek',
+      'projects-title-suffix': 'Terbaik',
+      'filter-all': 'Semua',
+      'filter-webapp': 'Aplikasi Web',
+      'filter-animation': 'Animasi',
+      'project1-category': 'Interactive Bio / Web App',
+      'project1-desc': 'Halaman portofolio bio interaktif dengan desain glassmorphism premium, floating orbs, efek partikel canvas dinamis, dan penataan link kustom yang responsif.',
+      'project2-category': 'Web Page / Animation',
+      'project2-desc': 'Halaman web minimalis interaktif dengan tema luar angkasa, animasi pergerakan bintang (stardust) berulang, pencahayaan radial gradient, dan visual efek galaksi.',
+      'project3-category': 'Learning OS / Web App',
+      'project3-desc': 'Sistem operasi pembelajaran personal terintegrasi dengan dasbor pelacakan target belajar, modul manajemen dokumen ("Second Brain"), tutor bertenaga AI, modul RPG, visualisasi galaksi pengetahuan (React Flow), dan analitik.',
+      'edu-title-prefix': 'Riwayat',
+      'edu-title-span': 'Pendidikan',
+      'edu1-desc': 'Menempuh pendidikan menengah kejuruan (SMK) dengan fokus pada keahlian Manajemen Perkantoran dan Layanan bisnis.',
+      'edu2-desc': 'Menempuh pendidikan tingkat menengah pertama (SMP) dan aktif dalam berbagai kegiatan sekolah serta pengembangan minat awal.',
+      'edu3-desc': 'Menempuh pendidikan tingkat dasar (SD), membangun fondasi akademis, logika matematika dasar, dan keterampilan bersosialisasi.',
+      'terminal-title-prefix': 'Retro',
+      'terminal-title-span': 'Terminal',
+      'contact-title-prefix': 'Mari',
+      'contact-title-span': 'Bekerja Sama',
+      'contact-subtitle': 'Hubungi Saya',
+      'contact-desc': 'Ada proyek menarik yang ingin dikerjakan bersama? Atau sekadar ingin menyapa? Kirim pesan Anda sekarang dan saya akan membalasnya sesegera mungkin.',
+      'contact-loc-title': 'Lokasi',
+      'contact-loc-val': 'Jawa Tengah, Indonesia',
+      'form-name': 'Nama Lengkap',
+      'form-email': 'Email',
+      'form-message': 'Pesan',
+      'form-submit': 'Kirim Pesan',
+      'footer-copy': '&copy; 2026 Narendra Javas Reswara. Seluruh hak cipta dilindungi.'
+    },
+    en: {
+      toastPalette: "Color Palette: ",
+      contactLoading: "Sending message...",
+      contactSuccess: "Message sent!",
+      contactError: "Error sending message.",
+      terminalWelcome: "Welcome to my portfolio!",
+      terminalHelp: "Type 'help' for commands.",
+      roleDev: "Web Developer",
+      roleDesigner: "UI/UX Designer",
+      customAccentApplied: "Custom Accent Color Applied!",
+      konamiActivated: "CHEATS ACTIVATED: ARCADE MODE ENABLED!",
+      konamiDeactivated: "CHEATS DEACTIVATED: STANDARD MODE",
+      'nav-home': 'Home',
+      'nav-about': 'About',
+      'nav-skills': 'Skills',
+      'nav-projects': 'Projects',
+      'nav-education': 'Education',
+      'nav-contact': 'Contact',
+      'hero-tagline': 'Welcome to My Portfolio',
+      'hero-title-prefix': 'Hi, I am',
+      'hero-subtitle-prefix': 'I am a',
+      'hero-description': 'Web Developer focused on building modern, responsive, and high-performance websites. I combine premium UI/UX design with clean code to create the best user experiences.',
+      'btn-projects': 'View Projects',
+      'btn-contact': 'Contact Me',
+      'about-title-span': 'About',
+      'about-title-rest': 'Me',
+      'about-subtitle': 'Who Am I?',
+      'about-p1': 'I am a web developer focused on building modern, responsive, and user-friendly websites. I have a strong interest in frontend development, UI design, and developing digital products that make a real impact.',
+      'about-p2': 'With over 1 year of experience in this industry, I have helped build online presence through fast and intuitive web applications. I am committed to writing clean and maintainable code.',
+      'val1-title': 'Code Quality',
+      'val1-desc': 'Clean, modular, documented, and easily maintainable code for the long term.',
+      'val2-title': 'User-Oriented Design',
+      'val2-desc': 'Ensuring intuitive navigation, maximum usability, and stunning visuals.',
+      'card1-label': 'Year of Experience',
+      'card2-label': 'Projects Completed',
+      'skills-title-prefix': 'My',
+      'skills-title-span': 'Skills',
+      'skills-cat1': 'Frontend Development',
+      'skills-cat2': 'Backend Development',
+      'skills-cat3': 'Tools & Platforms',
+      'skills-cat4': 'Soft Skills',
+      'soft-skill-1': 'Problem Solving',
+      'soft-skill-2': 'Effective Communication',
+      'soft-skill-3': 'Teamwork',
+      'soft-skill-4': 'Time Management',
+      'soft-skill-5': 'Adaptability',
+      'projects-title-prefix': 'Best',
+      'projects-title-span': 'Works',
+      'projects-title-suffix': '& Projects',
+      'filter-all': 'All',
+      'filter-webapp': 'Web Apps',
+      'filter-animation': 'Animations',
+      'project1-category': 'Interactive Bio / Web App',
+      'project1-desc': 'An interactive bio portfolio page featuring premium glassmorphism design, floating orbs, dynamic canvas particle effects, and customized responsive links.',
+      'project2-category': 'Web Page / Animation',
+      'project2-desc': 'An interactive minimalist web page with a space theme, repeating stardust movement animations, radial gradient lighting, and galaxy visual effects.',
+      'project3-category': 'Learning OS / Web App',
+      'project3-desc': 'A personal integrated learning operating system featuring a study targets tracking dashboard, a second brain document management module, AI tutors, RPG modules, knowledge galaxy visualization (React Flow), and analytics.',
+      'edu-title-prefix': 'Education',
+      'edu-title-span': 'History',
+      'edu1-desc': 'Undergoing vocational high school (SMK) education with a focus on Office Management and Business Services.',
+      'edu2-desc': 'Completed junior high school (SMP) education while actively participating in school activities and early skill development.',
+      'edu3-desc': 'Completed elementary school (SD) education, building a strong academic foundation, logic, and socialization skills.',
+      'terminal-title-prefix': 'Retro',
+      'terminal-title-span': 'Terminal',
+      'contact-title-prefix': 'Let\'s',
+      'contact-title-span': 'Work Together',
+      'contact-subtitle': 'Contact Me',
+      'contact-desc': 'Have an exciting project you want to work on together? Or just want to say hi? Send your message now and I will get back to you as soon as possible.',
+      'contact-loc-title': 'Location',
+      'contact-loc-val': 'Central Java, Indonesia',
+      'form-name': 'Full Name',
+      'form-email': 'Email Address',
+      'form-message': 'Message',
+      'form-submit': 'Send Message',
+      'footer-copy': '&copy; 2026 Narendra Javas Reswara. All rights reserved.'
+    }
+  };
+
   /* ==========================================
    * 0. RETRO SOUND EFFECTS (WEB AUDIO API)
    * ========================================== */
@@ -198,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const nextIndex = (currentPaletteIndex + 1) % palettes.length;
       applyPalette(nextIndex);
       playClickSound();
-      showToast(`Skema Warna: ${palettes[nextIndex].name}`);
+      showToast(`${translations[currentLang].toastPalette}${palettes[nextIndex].name}`);
       
       // Reset custom accent color when selecting standard palettes
       localStorage.removeItem('portfolio-custom-accent');
@@ -316,19 +475,28 @@ document.addEventListener('DOMContentLoaded', () => {
    * 3. TYPEWRITER EFFECT
    * ========================================== */
   const typewriterElement = document.getElementById('typewriter');
-  const roles = [
-    'Frontend Developer', 
-    'UI/UX Enthusiast', 
-    'Software Engineer', 
-    'Problem Solver'
-  ];
+  const rolesLang = {
+    id: [
+      'Frontend Developer', 
+      'UI/UX Enthusiast', 
+      'Software Engineer', 
+      'Pemecah Masalah'
+    ],
+    en: [
+      'Frontend Developer', 
+      'UI/UX Enthusiast', 
+      'Software Engineer', 
+      'Problem Solver'
+    ]
+  };
+  let activeRoles = rolesLang[currentLang];
   let roleIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
   let typingSpeed = 100;
 
   const type = () => {
-    const currentRole = roles[roleIndex];
+    const currentRole = activeRoles[roleIndex];
     
     if (isDeleting) {
       // Deleting characters
@@ -350,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (isDeleting && charIndex === 0) {
       // Word completely deleted, cycle to next word
       isDeleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
+      roleIndex = (roleIndex + 1) % activeRoles.length;
       typingSpeed = 500; // brief pause before next word
     }
 
@@ -446,13 +614,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Basic validation
       if (!nameField.value.trim() || !emailField.value.trim() || !messageField.value.trim()) {
-        showToast('Mohon isi semua kolom formulir!', 'error');
+        showToast(currentLang === 'id' ? 'Mohon isi semua kolom formulir!' : 'Please fill out all form fields!', 'error');
         return;
       }
 
       // Check if API key is not configured yet
       if (WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE" || !WEB3FORMS_ACCESS_KEY) {
-        showToast('Form gagal dikirim! Silakan atur Access Key Web3Forms Anda di script.js.', 'error');
+        showToast(currentLang === 'id' ? 'Form gagal dikirim! Silakan atur Access Key Web3Forms Anda di script.js.' : 'Form submission failed! Please set your Web3Forms Access Key in script.js.', 'error');
         return;
       }
 
@@ -460,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const originalBtnHTML = submitButton.innerHTML;
       submitButton.disabled = true;
       submitButton.innerHTML = `
-        Mengirim...
+        ${currentLang === 'id' ? 'Mengirim...' : 'Sending...'}
         <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="spinner" style="animation: spin 1s linear infinite;">
           <line x1="12" y1="2" x2="12" y2="6"></line>
           <line x1="12" y1="18" x2="12" y2="22"></line>
@@ -500,16 +668,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
 
         if (response.status === 200 || result.success) {
-          showToast(`Halo ${nameField.value.trim()}, pesan Anda telah berhasil dikirim!`);
+          showToast(currentLang === 'id' ? `Halo ${nameField.value.trim()}, pesan Anda telah berhasil dikirim!` : `Hello ${nameField.value.trim()}, your message has been sent successfully!`);
           triggerConfetti();
           playSuccessMelody();
           contactForm.reset();
         } else {
-          showToast(result.message || 'Gagal mengirim pesan, coba lagi nanti.', 'error');
+          showToast(result.message || (currentLang === 'id' ? 'Gagal mengirim pesan, coba lagi nanti.' : 'Failed to send message, please try again later.'), 'error');
           playErrorSound();
         }
       } catch (error) {
-        showToast('Terjadi kesalahan koneksi internet.', 'error');
+        showToast(currentLang === 'id' ? 'Terjadi kesalahan koneksi internet.' : 'Internet connection error.', 'error');
         playErrorSound();
       } finally {
         // Restore Button state
@@ -751,42 +919,23 @@ document.addEventListener('DOMContentLoaded', () => {
     userLine.innerHTML = `<span class="terminal-prompt">javas@dev-machine:~$</span> ${escapeHTML(cmd)}`;
     termOutput.appendChild(userLine);
 
+    const t = terminalTranslations[currentLang];
+
     switch (cleanCmd) {
       case 'help':
-        output = `Perintah yang tersedia:<br>
-- <span class="terminal-highlight">help</span>     : Menampilkan daftar perintah ini.<br>
-- <span class="terminal-highlight">about</span>    : Menampilkan info profil singkat Narendra Javas Reswara.<br>
-- <span class="terminal-highlight">skills</span>   : Menampilkan keahlian utama dan persentase penguasaan.<br>
-- <span class="terminal-highlight">projects</span> : Menampilkan proyek-proyek utama yang pernah dibuat.<br>
-- <span class="terminal-highlight">wa</span>       : Menampilkan kontak WhatsApp Javas.<br>
-- <span class="terminal-highlight">secret</span>   : Perintah rahasia luar angkasa.<br>
-- <span class="terminal-highlight">clear</span>    : Membersihkan layar terminal.`;
+        output = t.helpOutput;
         break;
       case 'about':
-        output = `<span class="terminal-info">=== PROFIL ===</span><br>
-Nama: Narendra Javas Reswara<br>
-Peran: Frontend Developer & UI/UX Enthusiast<br>
-Pendidikan: SMKN 2 Purworejo (Manajemen Perkantoran & Layanan Bisnis)<br>
-Fokus: Membangun aplikasi web modern dengan antarmuka premium, clean code, dan fungsionalitas tinggi.`;
+        output = t.aboutOutput;
         break;
       case 'skills':
-        output = `<span class="terminal-info">=== KEAHLIAN ===</span><br>
-HTML/CSS   : [■■■■■■■■■■■■■■■□] 95%<br>
-JavaScript : [■■■■■■■■■■■■■■□□] 90%<br>
-React/Next : [■■■■■■■■■■■■■□□□] 85%<br>
-Laravel    : [■■■■■■■■■■■□□□□□] 80%<br>
-MySQL/APIs : [■■■■■■■■■■■■■□□□] 85%`;
+        output = t.skillsOutput;
         break;
       case 'projects':
-        output = `<span class="terminal-info">=== PROYEK UTAMA ===</span><br>
-1. <span class="terminal-highlight">Javas Bio Link</span> - Bio Link interaktif glassmorphism + partikel canvas.<br>
-2. <span class="terminal-highlight">Javas Space Theme</span> - Halaman bertema galaksi dengan animasi bintang.<br>
-3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS terintegrasi dengan tutor AI & React Flow.`;
+        output = t.projectsOutput;
         break;
       case 'wa':
-        output = `<span class="terminal-info">=== HUBUNGI SAYA ===</span><br>
-WhatsApp: +62 853 3812 3425<br>
-Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="color: var(--color-yellow); text-decoration: underline;">https://wa.me/6285338123425</a>`;
+        output = t.waOutput;
         break;
       case 'secret':
         isSecret = true;
@@ -799,15 +948,14 @@ Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="colo
            / | \\
           /  |  \\
          </pre>
-<span class="terminal-highlight">Selamat! Anda menemukan Easter Egg luar angkasa! 🚀🌌</span><br>
-"Jelajahi terus kosmos pemrograman tanpa batas!"`;
+${t.secretMsg}`;
         break;
       case 'clear':
         termOutput.innerHTML = '';
         return;
       default:
         isError = true;
-        output = `<span class="terminal-error">Perintah tidak dikenal: "${escapeHTML(cmd)}". Ketik <span class="terminal-highlight">help</span> untuk daftar perintah.</span>`;
+        output = t.unknownCmd.replace('{cmd}', escapeHTML(cmd));
         break;
     }
 
@@ -858,6 +1006,136 @@ Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="colo
   }
 
   /* ==========================================
+   * 12. LANGUAGE DICTIONARIES & DYNAMIC SWITCHER
+   * ========================================== */
+  // Translations dictionary is now defined at the top of the file
+
+  const terminalTranslations = {
+    id: {
+      welcome: 'Selamat datang di Javas DevMachine v1.0.0!',
+      helpTip: 'Ketik <span class="terminal-highlight">help</span> untuk melihat daftar perintah yang tersedia.',
+      helpOutput: `Perintah yang tersedia:<br>
+- <span class="terminal-highlight">help</span>     : Menampilkan daftar perintah ini.<br>
+- <span class="terminal-highlight">about</span>    : Menampilkan info profil singkat Narendra Javas Reswara.<br>
+- <span class="terminal-highlight">skills</span>   : Menampilkan keahlian utama dan persentase penguasaan.<br>
+- <span class="terminal-highlight">projects</span> : Menampilkan proyek-proyek utama yang pernah dibuat.<br>
+- <span class="terminal-highlight">wa</span>       : Menampilkan kontak WhatsApp Javas.<br>
+- <span class="terminal-highlight">secret</span>   : Perintah rahasia luar angkasa.<br>
+- <span class="terminal-highlight">clear</span>    : Membersihkan layar terminal.`,
+      aboutOutput: `<span class="terminal-info">=== PROFIL ===</span><br>
+Nama: Narendra Javas Reswara<br>
+Peran: Frontend Developer & UI/UX Enthusiast<br>
+Pendidikan: SMKN 2 Purworejo (Manajemen Perkantoran & Layanan Bisnis)<br>
+Fokus: Membangun aplikasi web modern dengan antarmuka premium, clean code, dan fungsionalitas tinggi.`,
+      skillsOutput: `<span class="terminal-info">=== KEAHLIAN ===</span><br>
+HTML/CSS   : [■■■■■■■■■■■■■■■□] 95%<br>
+JavaScript : [■■■■■■■■■■■■■■□□] 90%<br>
+React/Next : [■■■■■■■■■■■■■□□□] 85%<br>
+Laravel    : [■■■■■■■■■■■□□□□□] 80%<br>
+MySQL/APIs : [■■■■■■■■■■■■■□□□] 85%`,
+      projectsOutput: `<span class="terminal-info">=== PROYEK UTAMA ===</span><br>
+1. <span class="terminal-highlight">Javas Bio Link</span> - Bio Link interaktif glassmorphism + partikel canvas.<br>
+2. <span class="terminal-highlight">Javas Space Theme</span> - Halaman bertema galaksi dengan animasi bintang.<br>
+3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS terintegrasi dengan tutor AI & React Flow.`,
+      waOutput: `<span class="terminal-info">=== HUBUNGI SAYA ===</span><br>
+WhatsApp: +62 853 3812 3425<br>
+Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="color: var(--color-yellow); text-decoration: underline;">https://wa.me/6285338123425</a>`,
+      secretMsg: `<span class="terminal-highlight">Selamat! Anda menemukan Easter Egg luar angkasa! 🚀🌌</span><br>
+"Jelajahi terus kosmos pemrograman tanpa batas!"`,
+      unknownCmd: `Perintah tidak dikenal: "{cmd}". Ketik <span class="terminal-highlight">help</span> untuk daftar perintah.`
+    },
+    en: {
+      welcome: 'Welcome to Javas DevMachine v1.0.0!',
+      helpTip: 'Type <span class="terminal-highlight">help</span> to see the list of available commands.',
+      helpOutput: `Available commands:<br>
+- <span class="terminal-highlight">help</span>     : Shows this help menu.<br>
+- <span class="terminal-highlight">about</span>    : Shows brief profile info of Narendra Javas Reswara.<br>
+- <span class="terminal-highlight">skills</span>   : Shows core technical skills and proficiency percentages.<br>
+- <span class="terminal-highlight">projects</span> : Shows the primary projects built.<br>
+- <span class="terminal-highlight">wa</span>       : Shows Javas' WhatsApp contact details.<br>
+- <span class="terminal-highlight">secret</span>   : A secret deep space command.<br>
+- <span class="terminal-highlight">clear</span>    : Clears the terminal screen.`,
+      aboutOutput: `<span class="terminal-info">=== PROFILE ===</span><br>
+Name: Narendra Javas Reswara<br>
+Role: Frontend Developer & UI/UX Enthusiast<br>
+Education: SMKN 2 Purworejo (Office Management & Business Services)<br>
+Focus: Building modern web applications with premium interfaces, clean code, and high usability.`,
+      skillsOutput: `<span class="terminal-info">=== TECHNICAL SKILLS ===</span><br>
+HTML/CSS   : [■■■■■■■■■■■■■■■□] 95%<br>
+JavaScript : [■■■■■■■■■■■■■■□□] 90%<br>
+React/Next : [■■■■■■■■■■■■■□□□] 85%<br>
+Laravel    : [■■■■■■■■■■■□□□□□] 80%<br>
+MySQL/APIs : [■■■■■■■■■■■■■□□□] 85%`,
+      projectsOutput: `<span class="terminal-info">=== FEATURED PROJECTS ===</span><br>
+1. <span class="terminal-highlight">Javas Bio Link</span> - Interactive bio link with glassmorphism design + canvas particles.<br>
+2. <span class="terminal-highlight">Javas Space Theme</span> - Galaxy themed web page with repeating stardust animation.<br>
+3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS integrated with AI tutors & React Flow.`,
+      waOutput: `<span class="terminal-info">=== CONTACT ME ===</span><br>
+WhatsApp: +62 853 3812 3425<br>
+Or visit: <a href="https://wa.me/6285338123425" target="_blank" style="color: var(--color-yellow); text-decoration: underline;">https://wa.me/6285338123425</a>`,
+      secretMsg: `<span class="terminal-highlight">Congratulations! You discovered the outer space Easter Egg! 🚀🌌</span><br>
+"Keep exploring the infinite cosmos of programming!"`,
+      unknownCmd: `Unknown command: "{cmd}". Type <span class="terminal-highlight">help</span> for the command list.`
+    }
+  };
+
+  const updateLanguageUI = () => {
+    // 1. Text elements
+    const translatableElements = document.querySelectorAll('[data-translate]');
+    translatableElements.forEach(elem => {
+      const key = elem.getAttribute('data-translate');
+      if (translations[currentLang][key]) {
+        elem.innerHTML = translations[currentLang][key];
+      }
+    });
+
+    // 2. Form placeholders
+    const nameInput = document.getElementById('contact-name');
+    const emailInput = document.getElementById('contact-email');
+    const messageInput = document.getElementById('contact-message');
+    
+    if (nameInput) nameInput.placeholder = currentLang === 'id' ? 'Masukkan nama lengkap Anda' : 'Enter your full name';
+    if (emailInput) emailInput.placeholder = currentLang === 'id' ? 'nama@email.com' : 'name@email.com';
+    if (messageInput) messageInput.placeholder = currentLang === 'id' ? 'Tuliskan pesan Anda di sini...' : 'Type your message here...';
+
+    // 3. Typewriter update
+    activeRoles = rolesLang[currentLang];
+    roleIndex = 0;
+    charIndex = 0;
+    isDeleting = false;
+
+    // 4. Lang toggle button text
+    const langToggleBtn = document.getElementById('lang-toggle');
+    if (langToggleBtn) {
+      langToggleBtn.textContent = currentLang === 'id' ? 'EN' : 'ID';
+    }
+
+    // 5. Terminal welcome message update
+    const terminalWelcomeLines = termBody ? termBody.querySelectorAll('.terminal-line') : [];
+    if (terminalWelcomeLines.length >= 2) {
+      terminalWelcomeLines[0].textContent = terminalTranslations[currentLang].welcome;
+      terminalWelcomeLines[1].innerHTML = terminalTranslations[currentLang].helpTip;
+    }
+  };
+
+  // Language toggle listener
+  const langToggleBtn = document.getElementById('lang-toggle');
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      localStorage.setItem('portfolio-lang', currentLang);
+      updateLanguageUI();
+      playClickSound();
+      showToast(currentLang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
+    });
+  }
+
+  // Initial language setup
+  if (currentLang !== 'id') {
+    updateLanguageUI();
+  }
+
+  /* ==========================================
    * 9. DYNAMIC CUSTOM ACCENT COLOR PICKER
    * ========================================== */
   const customColorPicker = document.getElementById('accent-color-picker');
@@ -883,7 +1161,7 @@ Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="colo
 
     customColorPicker.addEventListener('change', () => {
       playClickSound();
-      showToast(`Warna Aksen Kustom Diterapkan!`);
+      showToast(translations[currentLang].customAccentApplied);
     });
   }
 
@@ -933,11 +1211,11 @@ Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="colo
     const isAlreadyActive = document.body.classList.contains('konami-mode');
     if (isAlreadyActive) {
       document.body.classList.remove('konami-mode');
-      showToast("CHEATS DEACTIVATED: STANDARD MODE");
+      showToast(translations[currentLang].konamiDeactivated);
       playToggleSound(false);
     } else {
       document.body.classList.add('konami-mode');
-      showToast("CHEATS ACTIVATED: ARCADE MODE ENABLED!");
+      showToast(translations[currentLang].konamiActivated);
       playKonamiVictoryTune();
     }
   }
