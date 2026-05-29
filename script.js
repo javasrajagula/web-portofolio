@@ -65,6 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'project2-desc': 'Halaman web minimalis interaktif dengan tema luar angkasa, animasi pergerakan bintang (stardust) berulang, pencahayaan radial gradient, dan visual efek galaksi.',
       'project3-category': 'Learning OS / Web App',
       'project3-desc': 'Sistem operasi pembelajaran personal terintegrasi dengan dasbor pelacakan target belajar, modul manajemen dokumen ("Second Brain"), tutor bertenaga AI, modul RPG, visualisasi galaksi pengetahuan (React Flow), dan analitik.',
+      'project4-category': 'WhatsApp Bot / Web App',
+      'project4-desc': 'Bot WhatsApp interaktif dengan fitur otomatisasi pesan, integrasi API, auto-responder cerdas, dan penanganan perintah kustom menggunakan Node.js.',
       'edu-title-prefix': 'Riwayat',
       'edu-title-span': 'Pendidikan',
       'edu1-desc': 'Menempuh pendidikan menengah kejuruan (SMK) dengan fokus pada keahlian Manajemen Perkantoran dan Layanan bisnis.',
@@ -148,6 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'project2-desc': 'An interactive minimalist web page with a space theme, repeating stardust movement animations, radial gradient lighting, and galaxy visual effects.',
       'project3-category': 'Learning OS / Web App',
       'project3-desc': 'A personal integrated learning operating system featuring a study targets tracking dashboard, a second brain document management module, AI tutors, RPG modules, knowledge galaxy visualization (React Flow), and analytics.',
+      'project4-category': 'WhatsApp Bot / Web App',
+      'project4-desc': 'An interactive WhatsApp bot featuring message automation, API integration, smart auto-responder, and custom command handling powered by Node.js.',
       'edu-title-prefix': 'Education',
       'edu-title-span': 'History',
       'edu1-desc': 'Undergoing vocational high school (SMK) education with a focus on Office Management and Business Services.',
@@ -1109,7 +1113,8 @@ MySQL/APIs : [■■■■■■■■■■■■■□□□] 85%`,
       projectsOutput: `<span class="terminal-info">=== PROYEK UTAMA ===</span><br>
 1. <span class="terminal-highlight">Javas Bio Link</span> - Bio Link interaktif glassmorphism + partikel canvas.<br>
 2. <span class="terminal-highlight">Javas Space Theme</span> - Halaman bertema galaksi dengan animasi bintang.<br>
-3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS terintegrasi dengan tutor AI & React Flow.`,
+3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS terintegrasi dengan tutor AI & React Flow.<br>
+4. <span class="terminal-highlight">Javas WhatsApp Bot</span> - Bot WA otomatis terintegrasi dengan berbagai fitur layanan.`,
       waOutput: `<span class="terminal-info">=== HUBUNGI SAYA ===</span><br>
 WhatsApp: +62 853 3812 3425<br>
 Atau kunjungi: <a href="https://wa.me/6285338123425" target="_blank" style="color: var(--color-yellow); text-decoration: underline;">https://wa.me/6285338123425</a>`,
@@ -1142,7 +1147,8 @@ MySQL/APIs : [■■■■■■■■■■■■■□□□] 85%`,
       projectsOutput: `<span class="terminal-info">=== FEATURED PROJECTS ===</span><br>
 1. <span class="terminal-highlight">Javas Bio Link</span> - Interactive bio link with glassmorphism design + canvas particles.<br>
 2. <span class="terminal-highlight">Javas Space Theme</span> - Galaxy themed web page with repeating stardust animation.<br>
-3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS integrated with AI tutors & React Flow.`,
+3. <span class="terminal-highlight">Academy OS Ω</span> - Next.js 15 Learning OS integrated with AI tutors & React Flow.<br>
+4. <span class="terminal-highlight">Javas WhatsApp Bot</span> - Automated WA Bot integrated with various service features.`,
       waOutput: `<span class="terminal-info">=== CONTACT ME ===</span><br>
 WhatsApp: +62 853 3812 3425<br>
 Or visit: <a href="https://wa.me/6285338123425" target="_blank" style="color: var(--color-yellow); text-decoration: underline;">https://wa.me/6285338123425</a>`,
