@@ -76,6 +76,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-height);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-yellow) var(--bg-primary);
 }
 
 body {

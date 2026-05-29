@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   let currentLang = localStorage.getItem('portfolio-lang') === 'en' ? 'en' : 'id';
+  const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   const translations = {
     id: {
@@ -763,8 +764,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const customCursor = document.querySelector('.custom-cursor');
 
   if (customCursor) {
-    const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
     if (hasHover) {
       document.addEventListener('mousemove', (e) => {
         if (!customCursor.classList.contains('visible')) {
@@ -1266,21 +1265,26 @@ Or visit: <a href="https://wa.me/6285338123425" target="_blank" style="color: va
   /* ==========================================
    * 10. MOUSE COORDINATES PARALLAX (GEOMETRIC SHAPES)
    * ========================================== */
-  const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
   if (hasHover) {
+    let ticking = false;
     document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-      const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+          const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
 
-      const wrappers = document.querySelectorAll('.geo-shape-wrap');
-      wrappers.forEach(wrap => {
-        const depth = parseFloat(wrap.getAttribute('data-depth')) || 20;
-        const moveX = x * depth;
-        const moveY = y * depth;
-        
-        wrap.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
-      });
+          const wrappers = document.querySelectorAll('.geo-shape-wrap');
+          wrappers.forEach(wrap => {
+            const depth = parseFloat(wrap.getAttribute('data-depth')) || 20;
+            const moveX = x * depth;
+            const moveY = y * depth;
+            
+            wrap.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
   }
 
